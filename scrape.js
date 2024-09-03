@@ -1,4 +1,5 @@
 import puppeteer from "puppeteer";
+import fs from "fs";
 
 const scrape = async () => {
   // Open the browser and navigate to the website
@@ -42,6 +43,12 @@ const scrape = async () => {
   });
 
   console.log(books);
+
+  // Write the data to a json file
+  fs.writeFile('books.json', JSON.stringify(books, null, 2), (err) => {
+    if (err) throw err;
+    console.log('Data has been written to file');
+  });
   
   await browser.close(); // Close the browser
 };
