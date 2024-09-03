@@ -21,6 +21,27 @@ const scrape = async () => {
   // const title = await page.title();
   // console.log("Page title is " + title);
 
+
+  const books = await page.evaluate(() => {
+    const bookElements = document.querySelectorAll('.product_pod');
+    return Array.from(bookElements).map((book) => {
+      const title = book.querySelector('h3 a').getAttribute('title');
+      const price = book.querySelector('.price_color').innerText;
+      const stock = book.querySelector('.instock.availability') ? 'In Stock' : 'Out of Stock';
+      const rating = book.querySelector('.star-rating').className.split(' ')[1];
+      const link = book.querySelector('h3 a').href;
+
+      return {
+        title,
+        price,
+        stock,
+        rating,
+        link
+      };
+    })
+  });
+
+  console.log(books);
   
   await browser.close(); // Close the browser
 };
