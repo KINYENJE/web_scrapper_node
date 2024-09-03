@@ -7,11 +7,12 @@ const scrape = async () => {
   // 
   const page = await browser.newPage();
 
-  const allBooks = [];
+  const allBooks = []; // Array to store all the books
   
-  let currentPage = 1;
-  let maxPages = 10;
+  let currentPage = 1; // Start from page 1
+  let maxPages = 10; // Maximum number of pages to scrape
 
+  // Loop through all the pages and scrape the data
   while (currentPage <= maxPages) {
     const url = `https://books.toscrape.com/catalogue/page-${currentPage}.html`;
     await page.goto(url); // Go to the website
@@ -37,6 +38,7 @@ const scrape = async () => {
       })
     });
 
+    // Push the books to the allBooks array
     allBooks.push(...books);
     console.log(`Scraped page ${currentPage}`, books);
     currentPage++;
